@@ -13,6 +13,13 @@
             "args": ["run", "${file}"]
         },
         {
+            "name": "Python: Streamlit Test",
+            "type": "python",
+            "request": "launch",
+            "module": "streamlit",
+            "args": ["run", "app/lit_index.py", "--server.port", "48400"]
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",

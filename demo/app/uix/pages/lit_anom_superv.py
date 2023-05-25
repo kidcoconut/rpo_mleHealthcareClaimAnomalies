@@ -16,7 +16,7 @@ m_kblnTraceOn = True                                  #--- enable/disable module
 def run():
     #--- note:  in python, you need to specify global scope for fxns to access module-level variables 
     global m_kbln_TraceOn
-    print("\nINFO (lit_about.run)  loading ", description, " page ...") 
+    print("\nINFO (litAnomSuperv.run)  loading ", description, " page ...") 
 
 
     #--- page settings

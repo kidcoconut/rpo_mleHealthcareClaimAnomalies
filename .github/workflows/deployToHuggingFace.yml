@@ -2,32 +2,53 @@ name:  wrk_deployToHuggingFace
 
 on:
   push:
-    branches:
-      - demo_huggingFace
+    branches: [demo_huggingFace]
 
+  #--- allow to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
 jobs:
   deployment:
     runs-on:  ubuntu-latest
+    environment:  env_huggingFace
     steps:
-      -name:  stp_checkout_latest
-        uses: actions/checkout@latest_demo
-      - name: stp_setup_python
-        uses: actions/setup-python@v2
+      #--- action:  checkout the code from the branch;  only a single commit by default
+      - name:  stp_checkout_latest
+      - uses: actions/checkout@v3
         with:
-          python-version:  "3.8.16"
-      - name: stp_install_deps
-        run:  |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: stp_build_metadata_file
-        run:  |
-          python build_metadata_file.py
-      - name: stp_commit_metadata_file
-        run:  |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add metadata-*
-          git commit -m "add metadata file"
+          #--- default repo:  ${{ github.repository }}
+          repository: ''
+          ref:  demo_huggingFace
+      - run: echo "INFO - checking out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
+      #--- 
+      - name: stp_machine_pwd
+        working-directory : "."
+        run : "pwd"
+      - name: step ls -la
+        run : "ls -la"
+      #--- create a branch for deploy;  ready for push to huggingface
+      - name:  stp_prep_for_deploy
+        run: |
+          git checkout -b deploy_huggingface
+          rm README.md bootstrap*
+          git mv demo/app/* .
+          rm -r demo
+          git commit -am "ready to deploy to huggingface"
+      #--- 
+      - name: stp_machine_pwd
+        working-directory : "."
+        run : "pwd"
+      - name: step ls -la
+        run : "ls -la"
+      #--- 
+      - name:  stp_push_to_hugging_face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_USERNAME: kidcoconut
+          SPACE_NAME: spc_healthcareClaimAnomalies
+        run: git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME main 
+      #--- 
+      #---
       - name: stp_push_to_hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}

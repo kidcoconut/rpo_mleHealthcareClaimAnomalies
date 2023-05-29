@@ -12,20 +12,22 @@ jobs:
     runs-on:  ubuntu-latest
     environment:  env_huggingFace
     steps:
+      - run: echo "INFO - start job ... "
       #--- action:  checkout the code from the branch;  only a single commit by default
       - name:  stp_checkout_latest
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           #--- default repo:  ${{ github.repository }}
           repository: ''
           ref:  demo_huggingFace
-      - run: echo "INFO - checking out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
+      - run: echo "INFO - checked out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
       #--- 
-      - name: stp_machine_pwd
+      - name: stp_machine_pwd1
         working-directory : "."
-        run : "pwd"
-      - name: step ls -la
-        run : "ls -la"
+        run: |
+          echo "INFO:  get dir listing1"
+          pwd
+          ls -la
       #--- create a branch for deploy;  ready for push to huggingface
       - name:  stp_prep_for_deploy
         run: |
@@ -35,11 +37,12 @@ jobs:
           rm -r demo
           git commit -am "ready to deploy to huggingface"
       #--- 
-      - name: stp_machine_pwd
+      - name: stp_machine_pwd2
         working-directory : "."
-        run : "pwd"
-      - name: step ls -la
-        run : "ls -la"
+        run: |
+          echo "INFO:  get dir listing2"
+          pwd
+          ls -la
       #--- 
       - name:  stp_push_to_hugging_face
         env:

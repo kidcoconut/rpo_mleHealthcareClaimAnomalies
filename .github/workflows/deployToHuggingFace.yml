@@ -20,7 +20,10 @@ jobs:
           #--- default repo:  ${{ github.repository }}
           repository: ''
           ref:  demo_huggingFace
-      - run: echo "INFO - checked out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
+      - run: |
+          git status
+          pwd
+          #--- echo "INFO - checked out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
       #--- 
       - name: stp_machine_pwd1
         working-directory : "."

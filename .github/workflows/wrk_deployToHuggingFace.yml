@@ -48,6 +48,9 @@ jobs:
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
+          echo "INFO:  checking current working dir ... "
+          pwd
+          ls -la
           echo "INFO:  cloning from huggingFace ... "
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME
           echo "INFO:  moving into the repo directory ... "

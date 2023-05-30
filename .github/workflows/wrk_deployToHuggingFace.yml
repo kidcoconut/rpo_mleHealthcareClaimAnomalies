@@ -50,8 +50,7 @@ jobs:
         run: |
           echo "INFO:  checking current working dir ... "
           pwd
-          cd ..
-          pwd
+          cd ..         #--- Note:  code appears to run in parallel;  we need to move up to parent folder so repos are beside one another
           ls -la
           echo "INFO:  cloning from huggingFace ... "
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME
@@ -66,7 +65,7 @@ jobs:
           echo "INFO:  rename remotes ..."
           git remote rename origin hugFace
           
-          cp ../rpo_mleHealthcareClaimAnomalies/demo/app .
+          cp -r ../rpo_mleHealthcareClaimAnomalies/demo/app .
           echo "INFO:  git status ..."
           git status      #--- should be in main
 

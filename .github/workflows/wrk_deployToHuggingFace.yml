@@ -18,7 +18,7 @@ jobs:
           echo "INFO - start job ... "
           pwd
           ls -la .
-          ls -la ..
+          #ls -la ..
           
       #--- action:  checkout the code from the branch;  only a single commit by default
       - name:  stp_checkout_latest
@@ -33,7 +33,16 @@ jobs:
         run: |
           #--- echo "INFO - checked out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
           pwd
+          echo "INFO:  list remotes ..."
+          git remote -v
+          
+          echo "INFO:  rename remotes ..."
+          git remote rename origin gitHub
+          
           git status
+          
+          git config --global user.name "$(git log -n 1 --pretty=format:%an)"
+          git config --global user.email "$(git log -n 1 --pretty=format:%ae)"
           ls -la
           
       #---
@@ -51,10 +60,11 @@ jobs:
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
-          echo "INFO:  checking current working dir ... "
-          pwd
+          #echo "INFO:  checking current working dir ... "
+          #pwd
           cd ..         #--- Note:  code appears to run in parallel;  we need to move up to parent folder so repos are beside one another
-          ls -la
+          #ls -la
+          pwd
           echo "INFO:  cloning from huggingFace ... "
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME
           echo "INFO:  moving into the repo directory ... "
@@ -65,7 +75,12 @@ jobs:
           
       #--- 
       - name:  stp_upd_remotes_huggingFace
+        env:
+          SPACE_NAME: spc_healthcareClaimAnomalies
         run: |          
+          cd ..
+          pwd
+          cd $SPACE_NAME
           echo "INFO:  list remotes ..."
           git remote -v
           echo "INFO:  rename remotes ..."
@@ -73,10 +88,10 @@ jobs:
       
       
       #--- set git config args;  set username and email to the person who performed the last commit to the branch
-      - name:  stp_init_git_config
-        run: |
-          git config user.name "$(git log -n 1 --pretty=format:%an)"
-          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+      #- name:  stp_init_git_config
+      #  run: |
+      #    git config user.name "$(git log -n 1 --pretty=format:%an)"
+      #    git config user.email "$(git log -n 1 --pretty=format:%ae)"
       
       
       #--- 

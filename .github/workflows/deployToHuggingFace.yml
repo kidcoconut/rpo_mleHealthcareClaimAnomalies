@@ -25,12 +25,13 @@ jobs:
           pwd
           #--- echo "INFO - checked out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
       #--- 
-      - name: stp_machine_pwd1
+      - name: stp_machine_pwd1;  show dir contents pre-mods
         working-directory : "."
         run: |
           echo "INFO:  get dir listing1"
           pwd
-          ls -la
+          ls -la .
+          ls -ls ./demo/app
       #--- set git config args;  set username and email to the person who performed the last commit to the branch
       - name:  stp_init_git_config
         run: |
@@ -45,19 +46,19 @@ jobs:
           rm -r demo
           git commit -am "ready to deploy to huggingface"
       #--- 
-      - name: stp_machine_pwd2
+      - name: stp_machine_pwd2;  show dir contents post-mods
         working-directory : "."
         run: |
           echo "INFO:  get dir listing2"
           pwd
-          ls -la
+          ls -la .
       #--- 
-      - name:  stp_push_to_hugging_face
+      - name:  stp_push_to_hugging_face;  push local demo_huggingFace to remote main branch
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
-        run: git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME main 
+        run: git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME deploy_huggingFace:main 
       #--- 
       #---
       - name: stp_push_to_hub

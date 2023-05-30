@@ -34,15 +34,7 @@ jobs:
           git remote rename origin hugFace
           echo "INFO:  git status ..."
           git status      #--- should be in main
-      
-      
-      #--- set git config args;  set username and email to the person who performed the last commit to the branch
-      - name:  stp_init_git_config
-        run: |
-          git config user.name "$(git log -n 1 --pretty=format:%an)"
-          git config user.email "$(git log -n 1 --pretty=format:%ae)"
-          
-          
+
       #---
       - name:  stp_switch to a different branch
         run: |
@@ -55,7 +47,15 @@ jobs:
         run:  |
           git merge --no-edit demo_huggingFace
           #git commit -am "merged github/demo_huggingFace into runner/deploy_huggingFace"
-
+      
+      
+      #--- set git config args;  set username and email to the person who performed the last commit to the branch
+      - name:  stp_init_git_config
+        run: |
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+          
+          
       #--- 
       - name: stp_runner_pwd1;  show dir contents pre-mods
         run: |

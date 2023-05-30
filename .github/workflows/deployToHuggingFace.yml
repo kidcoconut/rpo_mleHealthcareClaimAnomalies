@@ -31,6 +31,11 @@ jobs:
           echo "INFO:  get dir listing1"
           pwd
           ls -la
+      #--- set git config args;  set username and email to the person who performed the last commit to the branch
+      - name:  stp_init_git_config
+        run: |
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
       #--- create a branch for deploy;  ready for push to huggingface
       - name:  stp_prep_for_deploy
         run: |

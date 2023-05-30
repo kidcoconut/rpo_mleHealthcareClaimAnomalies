@@ -80,7 +80,7 @@ jobs:
       #--- 
       - name:  stp_merge_gitHubBranchFiles_to_huggingFace
         run: |
-          cd ..
+          #cd ..
           pwd
           cp -r ../rpo_mleHealthcareClaimAnomalies/demo/app/* .
           echo "INFO:  git status ..."

@@ -50,6 +50,8 @@ jobs:
         run: |
           echo "INFO:  checking current working dir ... "
           pwd
+          cd ..
+          pwd
           ls -la
           echo "INFO:  cloning from huggingFace ... "
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME

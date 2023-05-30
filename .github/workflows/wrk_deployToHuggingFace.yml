@@ -12,7 +12,19 @@ jobs:
     runs-on:  ubuntu-latest
     environment:  env_huggingFace
     steps:
-      - run: echo "INFO - start job ... "
+      #---
+      - name:  stp_start_job
+        run: |
+          echo "INFO - start job ... "
+          pwd
+          git status
+          cd ..
+          pwd
+          git status
+      #--- 
+      - name:  stp_checkout_demoHuggingFace
+        run: |
+          pwd
       #--- 
       - name:  stp_clone_from_hugging_face
         env:

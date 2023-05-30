@@ -96,14 +96,17 @@ jobs:
       
       #--- 
       - name:  stp_merge_gitHubBranchFiles_to_huggingFace
+        env:
+          SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
-          #cd ..
+          cd ..
           pwd
+          cd $SPACE_NAME
           cp -r ../rpo_mleHealthcareClaimAnomalies/demo/app/* .
-          echo "INFO:  git status ..."
           ls -la
           
-          git status      #--- should be in main
+          echo "INFO:  git status ..."
+          git status      #--- should be in hugFace/main
           git commit -am "merged github/demo_huggingFace into runner/main"
 
 
@@ -146,7 +149,11 @@ jobs:
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
+          cd ..
           pwd
+          cd $SPACE_NAME
+          git status
+          git remote -v
           #git checkout main
           #git merge --no-edit deploy_huggingFace
           git push -f hugFace main 

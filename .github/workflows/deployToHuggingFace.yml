@@ -37,10 +37,11 @@ jobs:
         run: |
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
-      #--- create a branch for deploy;  ready for push to huggingface
+      #--- create a branch for deploy to main;  ready for push to huggingface
       - name:  stp_prep_for_deploy
         run: |
-          git checkout -b deploy_huggingface
+          #git checkout -b deploy_huggingface
+          git checkout -b main
           rm README.md bootstrap*
           git mv demo/app/* .
           rm -r demo
@@ -58,7 +59,9 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
-        run: git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME deploy_huggingFace:main 
+        run: |
+          #git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME deploy_huggingFace:main 
+          git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME main 
       #--- 
       #---
       - name: stp_push_to_hub

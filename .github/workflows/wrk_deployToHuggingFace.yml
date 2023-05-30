@@ -20,12 +20,19 @@ jobs:
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
+          echo "INFO:  cloning from huggingFace ... "
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME
+          echo "INFO:  moving into the repo directory ... "
           cd $SPACE_NAME
+          echo "INFO:  checking curent working dir ... "
           pwd
+          echo "INFO:  git status ... "
           git status
+          echo "INFO:  list remotes ..."
           git remote -v
+          echo "INFO:  rename remotes ..."
           git remote rename origin hugFace
+          echo "INFO:  git status ..."
           git status      #--- should be in main
       
       

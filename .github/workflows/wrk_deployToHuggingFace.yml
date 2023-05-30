@@ -1,4 +1,4 @@
-name:  wrk_deployToHuggingFace2
+name:  wrk_deployToHuggingFace
 
 on:
   push:
@@ -87,13 +87,6 @@ jobs:
           git remote rename origin hugFace
       
       
-      #--- set git config args;  set username and email to the person who performed the last commit to the branch
-      #- name:  stp_init_git_config
-      #  run: |
-      #    git config user.name "$(git log -n 1 --pretty=format:%an)"
-      #    git config user.email "$(git log -n 1 --pretty=format:%ae)"
-      
-      
       #--- 
       - name:  stp_merge_gitHubBranchFiles_to_huggingFace
         env:
@@ -111,38 +104,6 @@ jobs:
           git status      #--- should be in hugFace/main
           git commit -am "merged github/demo_huggingFace into runner/main"
 
-
-      #---
-      #- name:  stp_switch to a different branch
-      #  run: |
-      #    git checkout -b deploy_huggingFace
-      #    git rm -r *
-          
-          
-      #--- 
-      #- name: stp_runner_pwd1;  show dir contents pre-mods
-      #  run: |
-      #    echo "INFO:  get dir listing1"
-      #    pwd
-      #    ls -la .
-      #    ls -ls ./demo/app
-
-
-      #--- create a branch for deploy to main;  ready for push to huggingface
-      #- name:  stp_prep_for_deploy
-      #  run: |
-      #    rm README.md bootstrap*
-      #    git mv demo/app/* .
-      #    rm -r demo
-      #    git commit -am "cleaned up working folder, ready for deploy to huggingFace"
-          
-      #--- 
-      #- name: stp_machine_pwd2;  show dir contents post-mods
-      #  working-directory : "."
-      #  run: |
-      #    echo "INFO:  get dir listing2"
-      #    pwd
-      #    ls -la .
           
       #--- 
       - name:  stp_push_to_hugging_face;  push local demo_huggingFace to remote main branch

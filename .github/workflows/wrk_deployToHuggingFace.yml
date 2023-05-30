@@ -106,6 +106,7 @@ jobs:
           ls -la
           
           echo "INFO:  git status ..."
+          git add .
           git status      #--- should be in hugFace/main
           git commit -am "merged github/demo_huggingFace into runner/main"
 

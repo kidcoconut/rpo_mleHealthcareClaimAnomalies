@@ -17,6 +17,7 @@ jobs:
         run: |
           echo "INFO - start job ... "
           pwd
+          
       #--- action:  checkout the code from the branch;  only a single commit by default
       - name:  stp_checkout_latest
         uses: actions/checkout@v3
@@ -67,54 +68,49 @@ jobs:
           
           cp -r ../rpo_mleHealthcareClaimAnomalies/demo/app .
           echo "INFO:  git status ..."
+          ls -la
+          
           git status      #--- should be in main
-
-
-      #---
-      - name:  stp_pull_from_github
-        run:  |
-          echo "INFO:  merge github/demo_huggingFace into runner/main ..."
-          git merge --no-edit demo_huggingFace
           git commit -am "merged github/demo_huggingFace into runner/main"
       
       
       #--- set git config args;  set username and email to the person who performed the last commit to the branch
-      - name:  stp_init_git_config
-        run: |
-          git config user.name "$(git log -n 1 --pretty=format:%an)"
-          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+      #- name:  stp_init_git_config
+      #  run: |
+      #    git config user.name "$(git log -n 1 --pretty=format:%an)"
+      #    git config user.email "$(git log -n 1 --pretty=format:%ae)"
 
       #---
-      - name:  stp_switch to a different branch
-        run: |
-          git checkout -b deploy_huggingFace
-          git rm -r *
+      #- name:  stp_switch to a different branch
+      #  run: |
+      #    git checkout -b deploy_huggingFace
+      #    git rm -r *
           
           
       #--- 
-      - name: stp_runner_pwd1;  show dir contents pre-mods
-        run: |
-          echo "INFO:  get dir listing1"
-          pwd
-          ls -la .
-          ls -ls ./demo/app
+      #- name: stp_runner_pwd1;  show dir contents pre-mods
+      #  run: |
+      #    echo "INFO:  get dir listing1"
+      #    pwd
+      #    ls -la .
+      #    ls -ls ./demo/app
 
 
       #--- create a branch for deploy to main;  ready for push to huggingface
-      - name:  stp_prep_for_deploy
-        run: |
-          rm README.md bootstrap*
-          git mv demo/app/* .
-          rm -r demo
-          git commit -am "cleaned up working folder, ready for deploy to huggingFace"
+      #- name:  stp_prep_for_deploy
+      #  run: |
+      #    rm README.md bootstrap*
+      #    git mv demo/app/* .
+      #    rm -r demo
+      #    git commit -am "cleaned up working folder, ready for deploy to huggingFace"
           
       #--- 
-      - name: stp_machine_pwd2;  show dir contents post-mods
-        working-directory : "."
-        run: |
-          echo "INFO:  get dir listing2"
-          pwd
-          ls -la .
+      #- name: stp_machine_pwd2;  show dir contents post-mods
+      #  working-directory : "."
+      #  run: |
+      #    echo "INFO:  get dir listing2"
+      #    pwd
+      #    ls -la .
           
       #--- 
       - name:  stp_push_to_hugging_face;  push local demo_huggingFace to remote main branch
@@ -123,6 +119,7 @@ jobs:
           HF_USERNAME: kidcoconut
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
-          git checkout main
-          git merge --no-edit deploy_huggingFace
+          pwd
+          #git checkout main
+          #git merge --no-edit deploy_huggingFace
           git push -f hugFace main 

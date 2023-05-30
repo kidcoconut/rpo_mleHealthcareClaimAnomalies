@@ -35,18 +35,13 @@ jobs:
           echo "INFO:  git status ..."
           git status      #--- should be in main
 
-      #---
-      - name:  stp_switch to a different branch
-        run: |
-          git checkout -b deploy_huggingFace
-          git rm -r *
-
 
       #---
       - name:  stp_pull_from_github
         run:  |
+          echo "INFO:  merge github/demo_huggingFace into runner/main ..."
           git merge --no-edit demo_huggingFace
-          #git commit -am "merged github/demo_huggingFace into runner/deploy_huggingFace"
+          git commit -am "merged github/demo_huggingFace into runner/main"
       
       
       #--- set git config args;  set username and email to the person who performed the last commit to the branch
@@ -54,6 +49,12 @@ jobs:
         run: |
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
+
+      #---
+      - name:  stp_switch to a different branch
+        run: |
+          git checkout -b deploy_huggingFace
+          git rm -r *
           
           
       #--- 

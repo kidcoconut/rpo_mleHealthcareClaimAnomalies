@@ -61,10 +61,4 @@ jobs:
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
           #git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME deploy_huggingFace:main 
-          git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME main 
-      #--- 
-      #---
-      - name: stp_push_to_hub
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/kidcoconut/spc_healthcareClaimAnomalies demo
+          git push -f https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME main 

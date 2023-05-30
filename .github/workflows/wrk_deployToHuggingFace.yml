@@ -21,6 +21,9 @@ jobs:
           SPACE_NAME: spc_healthcareClaimAnomalies
         run: |
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME
+          cd $SPACE_NAME
+          pwd
+          git status
           git remote -v
           git remote rename origin hugFace
           git status      #--- should be in main

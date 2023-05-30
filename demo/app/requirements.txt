@@ -1,5 +1,6 @@
 #--- conda create --name env_capstone python=3.8.16
 #--- pip freeze | xargs pip uninstall -y                    #--- optional clean the conda env
+#--- 20230530:  commented out all secondary packages as they were causing the huggingfaceSpace to fail 
 
 #altair==4.2.2
 #anyio==3.6.2

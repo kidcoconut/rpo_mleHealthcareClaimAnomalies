@@ -17,6 +17,8 @@ jobs:
         run: |
           echo "INFO - start job ... "
           pwd
+          ls -la .
+          ls -la ..
           
       #--- action:  checkout the code from the branch;  only a single commit by default
       - name:  stp_checkout_latest

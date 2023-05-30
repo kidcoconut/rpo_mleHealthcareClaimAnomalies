@@ -61,24 +61,34 @@ jobs:
           pwd
           ls -la
           
+      #--- 
+      - name:  stp_upd_remotes_huggingFace
+        run: |          
           echo "INFO:  list remotes ..."
           git remote -v
           echo "INFO:  rename remotes ..."
           git remote rename origin hugFace
-          
-          cp -r ../rpo_mleHealthcareClaimAnomalies/demo/app .
+      
+      
+      #--- set git config args;  set username and email to the person who performed the last commit to the branch
+      - name:  stp_init_git_config
+        run: |
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+      
+      
+      #--- 
+      - name:  stp_merge_gitHubBranchFiles_to_huggingFace
+        run: |
+          cd ..
+          pwd
+          cp -r ../rpo_mleHealthcareClaimAnomalies/demo/app/* .
           echo "INFO:  git status ..."
           ls -la
           
           git status      #--- should be in main
           git commit -am "merged github/demo_huggingFace into runner/main"
-      
-      
-      #--- set git config args;  set username and email to the person who performed the last commit to the branch
-      #- name:  stp_init_git_config
-      #  run: |
-      #    git config user.name "$(git log -n 1 --pretty=format:%an)"
-      #    git config user.email "$(git log -n 1 --pretty=format:%ae)"
+
 
       #---
       #- name:  stp_switch to a different branch

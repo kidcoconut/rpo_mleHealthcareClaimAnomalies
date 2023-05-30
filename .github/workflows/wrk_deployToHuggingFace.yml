@@ -17,14 +17,30 @@ jobs:
         run: |
           echo "INFO - start job ... "
           pwd
-          git status
-          cd ..
-          pwd
-          git status
-      #--- 
-      - name:  stp_checkout_demoHuggingFace
+      #--- action:  checkout the code from the branch;  only a single commit by default
+      - name:  stp_checkout_latest
+        uses: actions/checkout@v3
+        with:
+          #--- default repo:  ${{ github.repository }}
+          repository: ''
+          ref:  demo_huggingFace
+          
+      #---
+      - name:  stp_gitStatus_rpoGitHub
         run: |
+          #--- echo "INFO - checked out repo/branch - ${{ github.repository }} / ${{ github.ref_name }} "
           pwd
+          git status
+          ls -la
+          
+      #---
+      - name:  stp_gitStatus_rpoHuggingFace
+        run: |
+          cd ..
+          echo "INFO:  checking current working dir ... "
+          pwd
+          ls -la
+          
       #--- 
       - name:  stp_clone_from_hugging_face
         env:
@@ -36,14 +52,16 @@ jobs:
           git clone https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME
           echo "INFO:  moving into the repo directory ... "
           cd $SPACE_NAME
-          echo "INFO:  checking curent working dir ... "
+          echo "INFO:  checking current working dir ... "
           pwd
-          echo "INFO:  git status ... "
-          git status
+          ls -la
+          
           echo "INFO:  list remotes ..."
           git remote -v
           echo "INFO:  rename remotes ..."
           git remote rename origin hugFace
+          
+          cp ../rpo_mleHealthcareClaimAnomalies/demo/app .
           echo "INFO:  git status ..."
           git status      #--- should be in main
 
